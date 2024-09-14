@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-SAM 2 시스템 다이어그램</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.4.3/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .mermaid {
+            margin-bottom: 50px;
+            display: none;
+        }
+        .mermaid.active {
+            display: block;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>K-SAM 2 시스템 다이어그램</h1>
+
+    <div>
+        <button onclick="showDiagram('diagram1')">다이어그램 1 보기</button>
+        <button onclick="showDiagram('diagram2')">다이어그램 2 보기</button>
+    </div>
+
+    <div id="diagram1" class="mermaid active">
+        flowchart TB
+            subgraph 입력계층["입력 계층"]
+                direction LR
+                A1["📹 CCTV<br/>네트워크"]
+                A2["🚁 드론<br/>감시"]
+                A3["🔥 열화상<br/>이미징"]
+            end
+            subgraph 처리계층["데이터 수집 및 처리 계층"]
+                direction LR
+                B1["🔒 보안<br/>데이터 수집"]
+                B2["🔐 암호화<br/>데이터 전송"]
+                B3["💻 엣지<br/>컴퓨팅"]
+            end
+            subgraph 핵심계층["K-SAM 2 핵심 계층"]
+                direction LR
+                C1["🧠 스트리밍<br/>메모리 모듈"]
+                C2["👁 고급<br/>객체 탐지"]
+                C3["🔄 다중 센서<br/>융합"]
+                C4["🤖 위협 평가<br/>AI"]
+            end
+            subgraph 출력계층["출력 및 통합 계층"]
+                direction LR
+                D1["🎮 지휘<br/>통제 센터"]
+                D2["⚠ 실시간<br/>경보 시스템"]
+                D3["📡 보안<br/>통신"]
+                D4["🔧 자동화된<br/>대응 프로토콜"]
+            end
+            
+            입력계층 -->|데이터 흐름| 처리계층
+            처리계층 -->|처리된 데이터| 핵심계층
+            핵심계층 -->|분석 결과| 출력계층
+            
+            A1 & A2 & A3 -.-> B1
+            B1 --> B2 --> B3
+            B3 -.-> C1 & C2 & C3 & C4
+            C1 & C2 & C3 & C4 -.-> D1
+            C4 -.-> D2
+            D1 --> D3
+            D2 --> D4
+            
+            classDef inputClass fill:#3b82f6,stroke:#1d4ed8,stroke-width:4px,color:#ffffff,rx:10px
+            classDef processingClass fill:#10b981,stroke:#047857,stroke-width:4px,color:#ffffff,rx:10px
+            classDef coreClass fill:#8b5cf6,stroke:#6d28d9,stroke-width:4px,color:#ffffff,rx:10px
+            classDef outputClass fill:#ef4444,stroke:#b91c1c,stroke-width:4px,color:#ffffff,rx:10px
+            
+            class A1,A2,A3 inputClass
+            class B1,B2,B3 processingClass
+            class C1,C2,C3,C4 coreClass
+            class D1,D2,D3,D4 outputClass
+            
+            classDef subgraphStyle fill:#f1f5f9,stroke:#64748b,stroke-width:2px
+            class 입력계층,처리계층,핵심계층,출력계층 subgraphStyle
+    </div>
+
+    <div id="diagram2" class="mermaid">
+        flowchart TD
+            I[입력 장치]
+            E[Edge Node]
+            CM[중앙 관리 시스템]
+            I -->|데이터 전송| E
+            E -->|처리된 데이터| CM
+            subgraph 입력장치[입력 장치]
+                C[CCTV 네트워크]
+                D[드론]
+            end
+            classDef input fill:#FFD166,stroke:#FFAE03,stroke-width:2px
+            classDef edge fill:#26547C,stroke:#113655,stroke-width:2px
+            classDef cloud fill:#EF476F,stroke:#B5314C,stroke-width:2px
+            class I,C,D input
+            class E edge
+            class CM cloud
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+        function showDiagram(diagramId) {
+            document.querySelectorAll('.mermaid').forEach(diagram => {
+                diagram.classList.remove('active');
+                diagram.innerHTML = diagram.innerHTML.trim();
+            });
+            const activeDiagram = document.getElementById(diagramId);
+            activeDiagram.classList.add('active');
+            mermaid.init(undefined, activeDiagram);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showDiagram('diagram1');
+        });
+    </script>
+</body>
+</html>
